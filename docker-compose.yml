@@ -1,0 +1,20 @@
+version: '3.4'
+services:
+  node:
+    tty: true
+    stdin_open: true
+    container_name: auth-microservice
+    env_file:
+      - ./.env
+    depends_on:
+      - mongo
+    build:
+      context: .
+      target: deps
+    ports:
+      - '5050:4040'
+    volumes:
+      - '.:/var/code:rw'
+    entrypoint: ./startup.sh
+  mongo:
+    image: 'mongo:latest'
