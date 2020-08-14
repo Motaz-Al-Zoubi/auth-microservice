@@ -12,7 +12,7 @@
   "scripts": {
     "docker": "docker-compose up -d --build && docker exec -it ${PWD##*/} bash",
     "start": "node src/server.js",
-    "dev": "nodemon --exec npm run node -- src/server.js",
+    "dev": "nodemon --exec node -- src/server.js",
     "lint": "eslint src/",
     "test": "mocha ./test/**/*Spec.js ./test/**/**/*Spec.js --exit",
     "coverage": "nyc npm run test",
