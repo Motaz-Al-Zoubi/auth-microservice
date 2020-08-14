@@ -11,6 +11,8 @@
   ],
   "scripts": {
     "docker": "docker-compose up -d --build && docker exec -it ${PWD##*/} bash",
+    "docker-build": "docker build -t ${PWD##*/} .",
+    "docker-run": "docker run -p 5555:8080 ${PWD##*/}",
     "start": "node src/server.js",
     "dev": "nodemon --exec node -- src/server.js",
     "lint": "eslint src/",

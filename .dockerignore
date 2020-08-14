@@ -1,0 +1,47 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Tmp
+tmp
+*.tmp
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Coverage directory used by tools like istanbul
+coverage
+.nyc_output
+
+# Compiled binaries
+build
+
+# Dependency directory
+node_modules
+
+# Dependency Directory
+./node_modules
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Mac .DS_Store files
+.DS_Store
+
+# Config files
+config.js
+
+# Editors config
+.vscode
+
+# Environment variables
+.env
+
+# ESlint
+.eslintrc.json
