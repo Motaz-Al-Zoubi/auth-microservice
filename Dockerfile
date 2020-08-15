@@ -10,5 +10,5 @@ FROM node:12.4.0
 WORKDIR /var/code
 RUN apt-get update && apt-get install -y vim
 COPY --from=deps /var/code /var/code
-RUN chmod +x server.js
+RUN chmod +x ./src/server.js
 ENTRYPOINT ["./src/server.js"]
