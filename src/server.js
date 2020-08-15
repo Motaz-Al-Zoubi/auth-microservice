@@ -6,6 +6,7 @@ const { PORT, MONGO_URI } = process.env;
 const bootServer = async() => {
     try {
         await mongoose.connect(MONGO_URI, { useNewUrlParser: true });
+        // eslint-disable-next-line no-console
         console.log(`listening on port ${PORT}`);
         app.listen(PORT);
     } catch(error) {
