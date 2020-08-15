@@ -24,7 +24,7 @@ describe('[INTEGRATION] Authentication Endpoints', () => {
     });
 
     describe('POST /register', () => {
-        it('should registers a new user with username and password', async() => {
+        it('should register a new user with username and password', async() => {
             const response = await request(app)
                 .post(`${API_BASE}/register`)
                 .send(userData);
@@ -35,7 +35,7 @@ describe('[INTEGRATION] Authentication Endpoints', () => {
             expect(response.body).not.to.contain.keys(['password']);
         });
 
-        it('should fails when a user with used username is inserted', async() => {
+        it('should fail when a user with used username is inserted', async() => {
             const response = await request(app)
                 .post(`${API_BASE}/register`)
                 .send(userData);
@@ -64,7 +64,7 @@ describe('[INTEGRATION] Authentication Endpoints', () => {
     });
 
     describe('POST /authenticate', () => {
-        it('should authenticates a logged in user generating a JWT', async() => {
+        it('should authenticate a logged in user generating a JWT', async() => {
             const response = await request(app)
                 .post(`${API_BASE}/authenticate`)
                 .send(userData);
@@ -75,7 +75,7 @@ describe('[INTEGRATION] Authentication Endpoints', () => {
             expect(response.body.token).to.be.a('string');
         });
 
-        it('should fails authenticating a user with wrong credentials', async() => {
+        it('should fail authenticating a user with wrong credentials', async() => {
             const clonedUserData = { ...userData };
             clonedUserData.password += 'false';
 
@@ -85,7 +85,7 @@ describe('[INTEGRATION] Authentication Endpoints', () => {
             expect(response.status).to.be.equal(UNAUTHORIZED);
         });
 
-        it('should fails authenticating a user not registered', async() => {
+        it('should fail authenticating a user not registered', async() => {
             const clonedUserData = { ...userData };
             clonedUserData.username += 'false';
 
