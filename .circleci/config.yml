@@ -57,7 +57,7 @@ jobs:
           name: Building and pushing image
           command: |
             IMAGE_VERSION=$(grep -o '"version":.*"' package.json | cut -d ' ' -f 2 | tr -d '"')
-            docker build --build-arg=NODE_ENV=production -t $DOCKER_USERNAME/$CIRCLE_PROJECT_REPONAME:$IMAGE_VERSION .
+            docker build --build-arg=PORT=$PORT --build-arg=NODE_ENV=$NODE_ENV -t $DOCKER_USERNAME/$CIRCLE_PROJECT_REPONAME:$IMAGE_VERSION .
             docker login --username=$DOCKER_USERNAME --password=$DOCKER_PASSWORD
             docker push $DOCKER_USERNAME/$CIRCLE_PROJECT_REPONAME:$IMAGE_VERSION
 
