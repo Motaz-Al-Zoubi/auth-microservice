@@ -1,8 +1,6 @@
 FROM node:12.4.0 AS deps
 ARG NODE_ENV
 ENV NODE_ENV $NODE_ENV
-ARG PORT
-ENV PORT $PORT
 WORKDIR /var/code
 COPY package.json .
 RUN npm install
@@ -13,7 +11,5 @@ WORKDIR /var/code
 RUN apt-get update && apt-get install -y vim
 COPY --from=deps /var/code /var/code
 RUN chmod +x ./src/server.js
-RUN echo "NODE_ENV IS $NODE_ENV"
-RUN echo "PORT IS $PORT"
-EXPOSE $PORT
+EXPOSE 4040
 CMD ["node", "./src/server.js"]
