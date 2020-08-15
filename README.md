@@ -1,16 +1,27 @@
 # Authentication Microservice
 
-## Running locally
+## Pre-requisites
+- Linux machine (ubuntu for example)
+- Docker.
+- Docker-Compose
+
+## Running locally for development and testing
 - Copy `.env-example` to `.env` and set the needed env variables.
-- Run `npm run docker`wait until the docker build process let you inside the container
+- Run `npm run docker` wait until the docker build process let you inside the container
 - Run the test cases `npm run test`
 - Run the test coverage `npm run coverage`
 - Run dev server with hot reload `npm run dev`
 - Run the production bundle `npm start`
 
-## Running the container in production
+## Running the container in production server or local to test the app as containers
+- Run mongo image by doing the following:
+    - `cd ./mongo`
+    - `docker-compose up`
 - Run `docker-build` that is going to build the docker image tagged with the repository name
-- Run `docker-run` that is going to run the image built in the previous step
+- Copy `.env-example` to `.env` and set the needed env variables.
+- Run `docker-run` that is going to run the image built in the previous step. 
+This script assumes that the `PORT` of the server is `4040` and there is a mongo image running on a docker network called `mongo_default`. 
+As well as it assumes that you set the env variables in file called `.env`.
 
 ## Linting
 

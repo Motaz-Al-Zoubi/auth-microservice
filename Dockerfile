@@ -11,4 +11,5 @@ WORKDIR /var/code
 RUN apt-get update && apt-get install -y vim
 COPY --from=deps /var/code /var/code
 RUN chmod +x ./src/server.js
-ENTRYPOINT ["./src/server.js"]
+EXPOSE $PORT
+CMD ["node", "./src/server.js"]
