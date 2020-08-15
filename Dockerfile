@@ -1,6 +1,8 @@
 FROM node:12.4.0 AS deps
 ARG NODE_ENV
 ENV NODE_ENV $NODE_ENV
+ARG PORT
+ENV PORT $PORT
 WORKDIR /var/code
 COPY package.json .
 RUN npm install
