@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt');
 const passport = require('passport');
 

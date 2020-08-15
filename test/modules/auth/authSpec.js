@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const mongoose = require('mongoose');
 const request = require('supertest');
 const { OK, CREATED, NOT_FOUND, BAD_REQUEST, UNAUTHORIZED } = require('http-status');
@@ -43,6 +44,23 @@ describe('[INTEGRATION] Authentication Endpoints', () => {
             expect(response.body).not.to.be.undefined;
             expect(response.body.message).to.equal('Username already exists');
         });
+
+        it('should return validation error', async() => {
+            const invalidUserData = _.omit(userData, 'username');
+            const response = await request(app)
+                .post(`${API_BASE}/register`)
+                .send(invalidUserData);
+            expect(response.status).to.be.equal(BAD_REQUEST);
+            expect(response.body).not.to.be.undefined;
+            expect(response.body).to.contain.keys(['message', 'errors']);
+            expect(response.body.message).to.be.equal('validation error');
+            expect(response.body.errors).to.deep.equal([{
+                field: [ 'username' ],
+                location: 'body',
+                messages: [ '"username" is required' ],
+                types: [ 'any.required' ]
+            }]);
+        });
     });
 
     describe('POST /authenticate', () => {
@@ -75,6 +93,17 @@ describe('[INTEGRATION] Authentication Endpoints', () => {
                 .post(`${API_BASE}/authenticate`)
                 .send(clonedUserData);
             expect(response.status).to.be.equal(NOT_FOUND);
+        });
+    });
+
+    describe('GET /notFoundLink', () => {
+        it('should return endpoint not found', async() => {
+            const response = await request(app)
+                .get(`${API_BASE}/notFoundLink`)
+            expect(response.status).to.be.equal(NOT_FOUND);
+            expect(response.body).to.be.an('object');
+            expect(response.body).to.contain.keys(['message']);
+            expect(response.body.message).to.be.equal('endpoint not found !');
         });
     });
 });

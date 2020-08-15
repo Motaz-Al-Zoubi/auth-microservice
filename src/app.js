@@ -34,7 +34,7 @@ app.use((err, req, res, next) => {
 });
 
 app.use((req, res) => {
-    res.status(NOT_FOUND).json({ message: 'endpoint not found !' });
+    return res.status(NOT_FOUND).json({ message: 'endpoint not found !' });
 });
 
 module.exports = app;
