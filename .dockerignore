@@ -45,3 +45,7 @@ config.js
 
 # ESlint
 .eslintrc.json
+
+
+# resources 
+./resources

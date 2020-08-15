@@ -27,3 +27,4 @@ if you want to generate a new version from the image, simply do the following
     - invite someone to review the PR (make sure you have upgrade the **version of package.json**)
     - then merge PR
     - circle ci will automatically run the test, coverage, lint jobs and finally build job which will build the docker image and tag it with **package.json version** then push it to docker hub
+![Circle CI](./resources/circleCI.png "How it should look like in circle ci")
