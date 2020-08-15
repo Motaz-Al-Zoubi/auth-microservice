@@ -1,0 +1,82 @@
+version: 2
+references:
+  workdir: &workdir
+    /var/code
+
+  attach_workdir: &attach_workdir
+    attach_workspace:
+      at: *workdir
+
+  images: &images
+    docker:
+      - image: node:12.4.0
+      - name: mongo
+        image: mongo:latest
+    working_directory: *workdir
+
+jobs:
+  setup:
+    <<: *images
+    steps:
+      - checkout
+      - run:
+          name: Installing dependencies
+          command: npm install
+      - persist_to_workspace:
+          root: *workdir
+          paths:
+            - ./*
+
+  coverage:
+    <<: *images
+    steps:
+      - *attach_workdir
+      - run:
+          name: Running coverage
+          command: npm run coverage
+      - store_artifacts:
+          path: /var/code/mocha
+
+  lint:
+    <<: *images
+    steps:
+      - *attach_workdir
+      - run:
+          name: Running lint
+          command: npm run lint
+
+  build:
+    docker:
+      - image: docker:17.05.0-ce-git
+    working_directory: /var/code
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 17.05.0-ce
+      - run:
+          name: Building and pushing image
+          command: |
+            IMAGE_VERSION=$(grep -o '"version":.*"' package.json | cut -d ' ' -f 2 | tr -d '"')
+            docker build --build-arg=NODE_ENV=production -t $DOCKER_USERNAME/$CIRCLE_PROJECT_REPONAME:$IMAGE_VERSION .
+            docker login --username=$DOCKER_USERNAME --password=$DOCKER_PASSWORD
+            docker push $DOCKER_USERNAME/$CIRCLE_PROJECT_REPONAME:$IMAGE_VERSION
+
+workflows:
+  version: 2
+  build_and_push:
+    jobs:
+      - setup:
+      - coverage:
+          requires:
+            - setup
+      - lint:
+          requires:
+            - setup
+      - build:
+          context: Docker
+          requires:
+            - coverage
+            - lint
+          filters:
+            branches:
+              only: master
