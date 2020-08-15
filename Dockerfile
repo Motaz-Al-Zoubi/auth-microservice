@@ -13,5 +13,7 @@ WORKDIR /var/code
 RUN apt-get update && apt-get install -y vim
 COPY --from=deps /var/code /var/code
 RUN chmod +x ./src/server.js
+RUN echo "NODE_ENV IS $NODE_ENV"
+RUN echo "PORT IS $PORT"
 EXPOSE $PORT
 CMD ["node", "./src/server.js"]
