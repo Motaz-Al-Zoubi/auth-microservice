@@ -17,9 +17,9 @@
 - Run mongo image by doing the following:
     - `cd ./mongo`
     - `docker-compose up`
-- Run `docker-build` that is going to build the docker image tagged with the repository name
+- Run `npm run docker-build` that is going to build the docker image tagged with the repository name
 - Copy `.env-example` to `.env` and set the needed env variables.
-- Run `docker-run` that is going to run the image built in the previous step. 
+- Run `npm run docker-run` that is going to run the image built in the previous step. 
 This script assumes that the `PORT` of the server is `4040` and there is a mongo image running on a docker network called `mongo_default`. 
 As well as it assumes that you set the env variables in file called `.env`.
 
